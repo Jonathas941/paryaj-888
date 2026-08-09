@@ -16,18 +16,22 @@ export default function BetSlipPanel({ onClose, compact = false }) {
     setState("validating");
     try {
       const payload = {
-        userId: "current",
         stake: Number(stake),
         betType: selections.length === 1 ? "single" : betType,
         selections: selections.map(s => ({
-          eventId: s.eventId, marketId: s.market, selectionId: s.selectionId, displayOdds: s.odds
+          eventId: s.eventId, marketId: s.marketId || s.market, selectionId: s.selectionId, displayOdds: s.odds
         }))
       };
       const res = await api.placeBet(payload);
       setResult(res);
       setState(res.accepted ? "accepted" : "rejected");
     } catch (e) {
-      setState("network_error");
+      if (e.status === 0) {
+        setState("network_error");
+      } else {
+        setResult({ accepted: false, bet_id: null, reason: e.message });
+        setState("rejected");
+      }
     }
   };
 

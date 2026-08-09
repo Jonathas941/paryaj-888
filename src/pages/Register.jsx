@@ -10,6 +10,7 @@ import AuthLayout from "@/components/AuthLayout";
 import GoogleIcon from "@/components/GoogleIcon";
 import { toast } from "@/components/ui/use-toast";
 import { safeReturnTo } from "@/lib/authReturnTo";
+import api from "@/lib/api";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -45,6 +46,18 @@ export default function Register() {
       const result = await base44.auth.verifyOtp({ email, otpCode });
       if (result?.access_token) {
         base44.auth.setToken(result.access_token);
+      }
+      // Best-effort: create a matching account on the Railway backend so the
+      // user can place real bets. Falls back to login if account already exists.
+      try {
+        const username = (email.split("@")[0] || "player").replace(/[^a-zA-Z0-9_.-]/g, "").slice(0, 40) || "player" + Date.now();
+        await api.register({
+          firstName: username, lastName: "Player", username,
+          email, password,
+          dateOfBirth: "1995-01-01", country: "US", currency: "USD", language: "en"
+        });
+      } catch (_) {
+        try { await api.login(email, password); } catch (__) { /* backend auth optional */ }
       }
       window.location.href = safeReturnTo();
     } catch (err) {

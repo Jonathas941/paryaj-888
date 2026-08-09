@@ -8,6 +8,7 @@ import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
 import AuthLayout from "@/components/AuthLayout";
 import GoogleIcon from "@/components/GoogleIcon";
 import { safeReturnTo } from "@/lib/authReturnTo";
+import api from "@/lib/api";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -24,6 +25,10 @@ export default function Login() {
     setLoading(true);
     try {
       await base44.auth.loginViaEmailPassword(email, password);
+      // Best-effort: also authenticate with the Railway backend for API calls.
+      // If this fails (account not yet in backend), app access still works and
+      // the API layer falls back to sample data.
+      try { await api.login(email, password); } catch (_) { /* backend auth optional */ }
       window.location.href = returnTo;
     } catch (err) {
       setError(err.message || "Invalid email or password");

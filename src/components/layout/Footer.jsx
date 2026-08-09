@@ -1,11 +1,31 @@
 import React from "react";
-import { Home, Info, Shield, HelpCircle, FileText } from "lucide-react";
+import { Info, Shield, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import Logo from "@/components/brand/Logo";
 
 export default function Footer() {
   return (
     <footer className="hidden lg:block mt-10 border-t border-border glass">
-      <div className="max-w-6xl mx-auto px-6 py-8">
+      <div className="max-w-[1600px] mx-auto px-6 py-8">
+        {/* Brand lockup */}
+        <div className="flex items-center justify-between gap-6 pb-7 mb-7 border-b border-border">
+          <div className="flex items-center gap-4">
+            <Logo showTagline={false} size={56} />
+            <div>
+              <div className="font-display font-extrabold tracking-tight text-lg leading-none">
+                PARYAJ <span className="text-gradient-gold">888</span>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1.5 max-w-sm leading-relaxed">
+                Premium sportsbook &amp; casino. Best odds, fast payouts, live betting on
+                1000+ events every day.
+              </p>
+            </div>
+          </div>
+          <span className="shrink-0 grid place-items-center w-12 h-12 rounded-full border-2 border-gold/50 text-gold font-display font-extrabold text-sm">
+            18+
+          </span>
+        </div>
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
           <div>
             <h4 className="font-semibold mb-3 text-foreground">PARYAJ 888</h4>

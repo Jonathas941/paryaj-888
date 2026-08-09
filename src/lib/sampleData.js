@@ -30,17 +30,17 @@ function defaultMarkets() {
 
 export const sports = [
   { id: "soccer", name: "Football", icon: "soccer", count: 1284 },
-  { id: "basketball", name: "Basketball", icon: "basketball", count: 412 },
-  { id: "tennis", name: "Tennis", icon: "tennis", count: 286 },
+  { id: "basketball", name: "Basketball", icon: "basketball", count: 892 },
+  { id: "tennis", name: "Tennis", icon: "tennis", count: 512 },
   { id: "baseball", name: "Baseball", icon: "baseball", count: 98 },
   { id: "american_football", name: "American Football", icon: "football", count: 64 },
   { id: "hockey", name: "Hockey", icon: "hockey", count: 120 },
-  { id: "boxing", name: "Boxing", icon: "boxing", count: 22 },
-  { id: "mma", name: "MMA", icon: "mma", count: 30 },
+  { id: "boxing", name: "Boxing", icon: "boxing", count: 312 },
+  { id: "mma", name: "MMA", icon: "mma", count: 286 },
   { id: "cricket", name: "Cricket", icon: "cricket", count: 76 },
   { id: "volleyball", name: "Volleyball", icon: "volleyball", count: 54 },
   { id: "table_tennis", name: "Table Tennis", icon: "table-tennis", count: 190 },
-  { id: "esports", name: "Esports", icon: "esports", count: 340 }
+  { id: "esports", name: "Esports", icon: "esports", count: 568 }
 ];
 
 export const leagues = [
@@ -48,18 +48,44 @@ export const leagues = [
   { id: "laliga", name: "La Liga", country: "Spain", sport: "soccer" },
   { id: "seriea", name: "Serie A", country: "Italy", sport: "soccer" },
   { id: "nba", name: "NBA", country: "USA", sport: "basketball" },
-  { id: "atp", name: "ATP Masters", country: "International", sport: "tennis" }
+  { id: "atp", name: "ATP Rome", country: "International", sport: "tennis" },
+  { id: "ufc", name: "UFC Fight Night", country: "International", sport: "mma" }
 ];
 
+// Three-way (1 / X / 2) and two-way (1 / 2) odds sets.
+const three = (h, d, a) => ({
+  "1x2": [
+    { id: "h", label: "Home", odds: h },
+    { id: "d", label: "Draw", odds: d },
+    { id: "a", label: "Away", odds: a }
+  ],
+  over_under: [
+    { id: "o25", label: "Over 2.5", odds: 1.85 },
+    { id: "u25", label: "Under 2.5", odds: 1.95 }
+  ]
+});
+
+const two = (h, a) => ({
+  "1x2": [
+    { id: "h", label: "Home", odds: h },
+    { id: "a", label: "Away", odds: a }
+  ]
+});
+
+// `live` overrides the values mk() derives, so the in-play strip matches the
+// approved homepage design exactly.
+const live = (base, { minute, marketCount }) => ({ ...base, minute, market_count: marketCount });
+
 const events = [
-  mk("e1", "Manchester United", "Liverpool", "Premier League", "soccer", "2026-08-09T20:00:00Z", { home: 1, away: 1 }),
-  mk("e2", "Arsenal", "Chelsea", "Premier League", "soccer", "2026-08-09T22:30:00Z", { home: 2, away: 0 }),
-  mk("e3", "Real Madrid", "Barcelona", "La Liga", "soccer", "2026-08-10T21:00:00Z"),
-  mk("e4", "Juventus", "Inter", "Serie A", "soccer", "2026-08-10T19:45:00Z"),
-  mk("e5", "LA Lakers", "Boston Celtics", "NBA", "basketball", "2026-08-09T23:30:00Z", { home: 78, away: 82 }),
-  mk("e6", "Miami Heat", "Denver Nuggets", "NBA", "basketball", "2026-08-10T01:00:00Z"),
-  mk("e7", "Alcaraz", "Sinner", "ATP Masters", "tennis", "2026-08-10T18:00:00Z", { home: 1, away: 2 }),
-  mk("e8", "Yankees", "Red Sox", "MLB", "baseball", "2026-08-10T00:05:00Z")
+  live(mk("e1", "Man City", "Liverpool", "Premier League", "soccer", "2026-08-09T20:00:00Z", { home: 2, away: 1 }, three(1.62, 3.80, 5.20)), { minute: "78'", marketCount: 3 }),
+  live(mk("e2", "Real Madrid", "Barcelona", "La Liga", "soccer", "2026-08-09T21:00:00Z", { home: 1, away: 0 }, three(2.05, 3.40, 3.40)), { minute: "63'", marketCount: 3 }),
+  live(mk("e3", "Boston Celtics", "Miami Heat", "NBA", "basketball", "2026-08-09T23:30:00Z", { home: 58, away: 52 }, two(1.70, 2.10)), { minute: "45+1'", marketCount: 20 }),
+  live(mk("e4", "A. Volkanovski", "I. Topuria", "UFC Fight Night", "mma", "2026-08-09T22:00:00Z", { home: 0, away: 0 }, { "1x2": [] }), { minute: "Round 3", marketCount: 6 }),
+  live(mk("e5", "J. Sinner", "C. Alcaraz", "ATP Rome", "tennis", "2026-08-09T18:00:00Z", { home: 1, away: 0 }, two(1.45, 2.65)), { minute: "22'", marketCount: 14 }),
+  mk("e6", "Arsenal", "Chelsea", "Premier League", "soccer", "2026-08-10T22:30:00Z"),
+  mk("e7", "Juventus", "Inter", "Serie A", "soccer", "2026-08-10T19:45:00Z"),
+  mk("e8", "Denver Nuggets", "LA Lakers", "NBA", "basketball", "2026-08-11T01:00:00Z"),
+  mk("e9", "Yankees", "Red Sox", "MLB", "baseball", "2026-08-11T00:05:00Z")
 ];
 
 export const liveEvents = events.filter(e => e.is_live);

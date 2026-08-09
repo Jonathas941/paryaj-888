@@ -86,10 +86,14 @@ export function getEventMarkets(id) {
 }
 
 export const promotions = [
-  { id: "p1", title: "100% Welcome Bonus", description: "Double your first deposit up to $500 on sports.", bonus: "100% up to $500", category: "welcome", banner: "https://images.unsplash.com/photo-1522778526097-ce079d5409ec?w=1200", requirement: "5x turnover", expires: "2026-12-31" },
-  { id: "p2", title: "Weekend Sports Boost", description: "Get a 10% profit boost on weekend accumulators.", bonus: "+10% profit", category: "sports", banner: "https://images.unsplash.com/photo-1577223625816-7605b1f3c1d1?w=1200", requirement: "3+ selections", expires: "2026-08-31" },
-  { id: "p3", title: "Accumulator Insurance", description: "Get your stake back if one leg lets you down.", bonus: "Stake refund", category: "accumulator", banner: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=1200", requirement: "5+ legs", expires: "2026-09-15" },
-  { id: "p4", title: "Casino Cashback", description: "10% weekly cashback on net casino losses.", bonus: "10% cashback", category: "casino", banner: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=1200", requirement: "1x turnover", expires: "2026-12-31" }
+  { id: "p1", title: "100% Welcome Bonus", description: "Double your first deposit up to $500 on sports.", bonus: "100% up to $500", category: "welcome", banner: "https://images.unsplash.com/photo-1522778526097-ce079d5409ec?w=2400&q=85", requirement: "5x turnover", expires: "2026-12-31" },
+  { id: "p2", title: "Weekend Sports Boost", description: "Get a 10% profit boost on weekend accumulators.", bonus: "+10% profit", category: "sports", banner: "https://images.unsplash.com/photo-1577223625816-7605b1f3c1d1?w=2400&q=85", requirement: "3+ selections", expires: "2026-08-31" },
+  { id: "p3", title: "Accumulator Insurance", description: "Get your stake back if one leg lets you down.", bonus: "Stake refund", category: "accumulator", banner: "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=2400&q=85", requirement: "5+ legs", expires: "2026-09-15" },
+  { id: "p4", title: "Casino Cashback", description: "10% weekly cashback on net casino losses.", bonus: "10% cashback", category: "casino", banner: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=2400&q=85", requirement: "1x turnover", expires: "2026-12-31" },
+  { id: "p5", title: "Champions League Special", description: "Boosted odds on all UCL knockout matches this week.", bonus: "Up to 5x odds", category: "sports", banner: "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=2400&q=85", requirement: "Min $10 stake", expires: "2026-09-30" },
+  { id: "p6", title: "Live Casino Welcome", description: "Get $25 free play on Evolution live dealer tables.", bonus: "$25 free play", category: "casino", banner: "https://images.unsplash.com/photo-1518895949257-7621c3c7e3e1?w=2400&q=85", requirement: "1x turnover", expires: "2026-10-15" },
+  { id: "p7", title: "NBA Playoffs Promo", description: "Free bet up to $50 on every NBA playoff game night.", bonus: "$50 free bet", category: "sports", banner: "https://images.unsplash.com/photo-1546519638-68e109496ffc?w=2400&q=85", requirement: "Min $20 stake", expires: "2026-08-31" },
+  { id: "p8", title: "Crypto Deposit Bonus", description: "Extra 15% on your first crypto deposit, instant credit.", bonus: "+15% extra", category: "welcome", banner: "https://images.unsplash.com/photo-1518546305927-5aeee522c635?w=2400&q=85", requirement: "3x turnover", expires: "2026-12-31" }
 ];
 
 export const wallet = {

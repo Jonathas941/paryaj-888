@@ -64,6 +64,11 @@ export default function LiveEventCompact({ event }) {
   const locked = odds1x2.length === 0;
   const more = event.market_count ? Math.max(0, event.market_count - odds1x2.length) : 0;
 
+  // Two-way markets (tennis, basketball, MMA) have no draw, so they run 1 / 2.
+  const labels = odds1x2.length === 2 ? ["1", "2"] : ["1", "X", "2"];
+  const cellCount = locked ? 2 : odds1x2.length;
+  const hasScore = event.score && event.score.home != null;
+
   const isActive = id => selections.some(s => s.eventId === event.id && s.selectionId === `${event.id}-${id}`);
 
   const add = (s, label) =>
@@ -97,33 +102,35 @@ export default function LiveEventCompact({ event }) {
             <TeamMark name={event.home} />
             <span className="text-[12px] font-semibold truncate group-hover/teams:text-bright transition">{event.home}</span>
           </div>
-          {event.score && <span className="text-[12.5px] font-bold tabular-nums shrink-0">{event.score.home}</span>}
+          {hasScore && <span className="text-[12.5px] font-bold tabular-nums shrink-0">{event.score.home}</span>}
         </div>
         <div className="flex items-center justify-between gap-2 mt-1.5">
           <div className="flex items-center gap-2 min-w-0">
             <TeamMark name={event.away} />
             <span className="text-[12px] font-semibold truncate group-hover/teams:text-bright transition">{event.away}</span>
           </div>
-          {event.score && <span className="text-[12.5px] font-bold tabular-nums shrink-0">{event.score.away}</span>}
+          {hasScore && <span className="text-[12.5px] font-bold tabular-nums shrink-0">{event.score.away}</span>}
         </div>
       </Link>
 
       {/* Odds */}
-      <div className={`grid gap-1.5 mt-3 ${more > 0 ? "grid-cols-[1fr_1fr_1fr_auto]" : "grid-cols-3"}`}>
+      <div
+        className="grid gap-1.5 mt-3"
+        style={{
+          gridTemplateColumns: `repeat(${cellCount}, minmax(0, 1fr))${more > 0 ? " auto" : ""}`
+        }}
+      >
         {locked
-          ? ["1", "2"].map(l => <OddsCell key={l} locked />)
-          : odds1x2.map((o, i) => {
-              const label = ["1", "X", "2"][i];
-              return (
-                <OddsCell
-                  key={o.id}
-                  label={label}
-                  odds={o.odds}
-                  active={isActive(o.id)}
-                  onClick={() => add(o, label)}
-                />
-              );
-            })}
+          ? ["a", "b"].map(k => <OddsCell key={k} locked />)
+          : odds1x2.map((o, i) => (
+              <OddsCell
+                key={o.id}
+                label={labels[i]}
+                odds={o.odds}
+                active={isActive(o.id)}
+                onClick={() => add(o, labels[i])}
+              />
+            ))}
         {more > 0 && (
           <Link
             to={`/event/${event.id}`}

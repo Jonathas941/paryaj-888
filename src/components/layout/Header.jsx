@@ -34,7 +34,7 @@ export default function Header({ wallet, user }) {
         <nav className="hidden lg:flex items-center gap-0.5">
           {NAV.map(({ to, icon: Icon, label, end }) => (
             <NavLink key={to} to={to} end={end}
-              className={({ isActive }) => `flex items-center gap-1.5 px-2 py-2 rounded-lg text-[13px] font-semibold transition ${isActive ? "text-bright bg-primary/15" : "text-muted-foreground hover:text-foreground hover:bg-surface-2"}`}>
+              className={({ isActive }) => `flex items-center gap-1.5 px-2 py-2 rounded-lg text-[13px] font-semibold transition ${isActive ? "text-bright shadow-[0_2px_0_0_hsl(var(--bright))]" : "text-muted-foreground hover:text-foreground hover:bg-surface-2"}`}>
               <Icon className="w-4 h-4" /> {label}
             </NavLink>
           ))}

@@ -1,27 +1,48 @@
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import { Image } from "@/components/ui/image";
-import { ArrowRight } from "lucide-react";
 
+/**
+ * Landscape promo card: stacked kicker / headline / sub on the left,
+ * artwork bleeding in from the right behind a horizontal scrim.
+ */
 export default function PromoBanner({ promo }) {
-  const [claimed, setClaimed] = useState(false);
+  const accent = promo.accent === "green" ? "text-bright" : "text-gold";
+
   return (
-    <div className="relative rounded-2xl overflow-hidden border border-border group shrink-0 w-[300px] sm:w-[380px] h-44 bg-surface snap-start">
-      <Image src={promo.banner} alt={promo.title} fittingType="fill" className="absolute inset-0 w-full h-full opacity-50 group-hover:opacity-60 group-hover:scale-105 transition duration-500" />
-      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/30" />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
-      <div className="pointer-events-none absolute -right-8 -top-8 w-32 h-32 rounded-full bg-gold/20 blur-2xl" />
-      <div className="relative p-5 flex flex-col h-full justify-between">
-        <div>
-          <span className="inline-block text-[10px] font-bold uppercase tracking-wider text-gold bg-gold/15 border border-gold/30 px-2 py-0.5 rounded-full mb-2">{promo.category}</span>
-          <h3 className="font-display font-extrabold text-lg sm:text-xl leading-tight">{promo.title}</h3>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1 line-clamp-1">{promo.description}</p>
+    <div className="relative shrink-0 snap-start w-[300px] sm:w-[340px] h-[104px] rounded-xl overflow-hidden border border-border bg-surface group">
+      {promo.banner && (
+        <Image
+          src={promo.banner}
+          alt=""
+          fittingType="fill"
+          className="absolute inset-0 w-full h-full opacity-60 group-hover:opacity-75 group-hover:scale-105 transition duration-500"
+        />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-transparent" />
+      <div className="pointer-events-none absolute -right-6 -top-6 w-24 h-24 rounded-full bg-gold/15 blur-2xl" />
+
+      <div className="relative h-full px-3.5 py-3 flex flex-col justify-between">
+        <div className="min-w-0">
+          {promo.kicker && (
+            <div className={`text-[10px] font-bold uppercase tracking-wide leading-none ${accent}`}>
+              {promo.kicker}
+            </div>
+          )}
+          <div className="font-display font-extrabold text-[17px] leading-[1.1] mt-1 truncate">
+            {promo.headline}
+          </div>
+          {promo.sub && (
+            <div className={`text-[11px] font-bold uppercase leading-none mt-1 ${accent}`}>{promo.sub}</div>
+          )}
         </div>
-        <div className="flex items-center justify-between">
-          <div className="font-display font-extrabold text-gradient-gold text-base sm:text-lg">{promo.bonus}</div>
-          <button onClick={() => setClaimed(true)} className={`inline-flex items-center gap-1.5 text-sm font-bold px-4 py-2 rounded-lg transition ${claimed ? "bg-surface-2 border border-border text-muted-foreground" : "bg-gradient-to-r from-primary to-bright text-white glow-green hover:brightness-110"}`}>
-            {claimed ? "Claimed ✓" : <>{promo.cta || "Claim"} <ArrowRight className="w-3.5 h-3.5" /></>}
-          </button>
-        </div>
+
+        <Link
+          to={promo.to || "/promotions"}
+          className="w-fit text-[10.5px] font-bold px-2.5 py-1 rounded-md border border-bright/40 bg-primary/20 text-bright hover:bg-primary/35 hover:border-bright/70 transition"
+        >
+          {promo.cta}
+        </Link>
       </div>
     </div>
   );

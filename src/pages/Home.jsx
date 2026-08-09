@@ -14,27 +14,27 @@ import { SkeletonList } from "@/components/common/LoadingSkeleton";
 import EmptyState from "@/components/common/EmptyState";
 
 const SPORT_CATEGORIES = [
-  { title: "Football", subtitle: "1,284 live markets", count: 1284, image: "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=800&q=80", icon: Trophy, to: "/sports" },
-  { title: "Basketball", subtitle: "412 live markets", count: 412, image: "https://images.unsplash.com/photo-1546519638-68e109496ffc?w=800&q=80", icon: Dices, to: "/sports" },
-  { title: "Tennis", subtitle: "286 live markets", count: 286, image: "https://images.unsplash.com/photo-1622163642998-1ea32b0bbc67?w=800&q=80", icon: Trophy, to: "/sports" },
-  { title: "Boxing", subtitle: "22 live markets", count: 22, image: "https://images.unsplash.com/photo-1570170609489-43197f518df0?w=800&q=80", icon: Flame, to: "/sports" },
-  { title: "MMA", subtitle: "30 live markets", count: 30, image: "https://images.unsplash.com/photo-1680022702604-292f21514497?w=800&q=80", icon: Flame, to: "/sports" },
-  { title: "Esports", subtitle: "340 live markets", count: 340, image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80", icon: Gamepad2, to: "/sports" }
+  { title: "Football", subtitle: "1,284 live markets", count: 1284, image: "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=800&q=80", icon: Trophy, to: "/sports" },
+  { title: "Basketball", subtitle: "412 live markets", count: 412, image: "https://images.unsplash.com/photo-1579487685737-e435a87b2518?w=800&q=80", icon: Dices, to: "/sports" },
+  { title: "Tennis", subtitle: "286 live markets", count: 286, image: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80", icon: Trophy, to: "/sports" },
+  { title: "Boxing", subtitle: "22 live markets", count: 22, image: "https://images.unsplash.com/photo-1546711076-85a7923432ab?w=800&q=80", icon: Flame, to: "/sports" },
+  { title: "MMA", subtitle: "30 live markets", count: 30, image: "https://images.unsplash.com/photo-1681203888755-bd61fe3558eb?w=800&q=80", icon: Flame, to: "/sports" },
+  { title: "Esports", subtitle: "340 live markets", count: 340, image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80", icon: Gamepad2, to: "/sports" }
 ];
 
 const CASINO_GAMES = [
-  { title: "Slots", subtitle: "2,400+ premium slots", image: "https://images.unsplash.com/photo-1606189934846-a527add8a5b8?w=800&q=80", icon: Dices, accent: "gold" },
-  { title: "Live Casino", subtitle: "Real dealers, HD streams", image: "https://images.unsplash.com/photo-1518895949257-7621c3c7e3e1?w=800&q=80", icon: MonitorPlay, accent: "green" },
-  { title: "Table Games", subtitle: "Roulette, blackjack & more", image: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=800&q=80", icon: Coins, accent: "gold" },
-  { title: "Jackpots", subtitle: "Mega prize pools", image: "https://images.unsplash.com/photo-1635776062043-2273c5c75c4b?w=800&q=80", icon: Crown, accent: "gold" },
-  { title: "Crash Games", subtitle: "Fast-paced multipliers", image: "https://images.unsplash.com/photo-1540708660033-402c2c5c1d1d?w=800&q=80", icon: Zap, accent: "green" }
+  { title: "Slots", subtitle: "2,400+ premium slots", image: "https://images.unsplash.com/photo-1518895312237-a9e23508077d?w=800&q=80", icon: Dices, accent: "gold" },
+  { title: "Live Casino", subtitle: "Real dealers, HD streams", image: "https://images.unsplash.com/photo-1511193311914-0346f16efe90?w=800&q=80", icon: MonitorPlay, accent: "green" },
+  { title: "Table Games", subtitle: "Roulette, blackjack & more", image: "https://images.unsplash.com/photo-1626775238053-4315516eedc9?w=800&q=80", icon: Coins, accent: "gold" },
+  { title: "Jackpots", subtitle: "Mega prize pools", image: "https://images.unsplash.com/photo-1596838132731-3301c3fd4317?w=800&q=80", icon: Crown, accent: "gold" },
+  { title: "Crash Games", subtitle: "Fast-paced multipliers", image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80", icon: Zap, accent: "green" }
 ];
 
 const PROMOS = [
-  { id: "p1", title: "100% Welcome Bonus", description: "Boost your first deposit instantly.", bonus: "up to $888", category: "Welcome", banner: "https://images.unsplash.com/photo-1522778526097-ce079d5409ec?w=1200&q=80", cta: "Claim Bonus" },
-  { id: "p2", title: "Weekly Reload 50%", description: "Reload every week and play more.", bonus: "up to $500", category: "Reload", banner: "https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1200&q=80", cta: "Claim Bonus" },
-  { id: "p3", title: "Refer & Earn", description: "Invite friends, earn real cash.", bonus: "up to $200 / friend", category: "Refer", banner: "https://images.unsplash.com/photo-1546519638-68e109496ffc?w=1200&q=80", cta: "Invite Now" },
-  { id: "p4", title: "Cashback", description: "Get back on net losses weekly.", bonus: "up to 10%", category: "Cashback", banner: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?w=1200&q=80", cta: "Activate" }
+  { id: "p1", title: "100% Welcome Bonus", description: "Boost your first deposit instantly.", bonus: "up to $888", category: "Welcome", banner: "https://images.unsplash.com/photo-1706675780107-7c43cc487928?w=1200&q=80", cta: "Claim Bonus" },
+  { id: "p2", title: "Weekly Reload 50%", description: "Reload every week and play more.", bonus: "up to $500", category: "Reload", banner: "https://images.unsplash.com/photo-1608245449230-4ac19066d2d0?w=1200&q=80", cta: "Claim Bonus" },
+  { id: "p3", title: "Refer & Earn", description: "Invite friends, earn real cash.", bonus: "up to $200 / friend", category: "Refer", banner: "https://images.unsplash.com/photo-1548003693-b55d51032288?w=1200&q=80", cta: "Invite Now" },
+  { id: "p4", title: "Cashback", description: "Get back on net losses weekly.", bonus: "up to 10%", category: "Cashback", banner: "https://images.unsplash.com/photo-1517232115160-ff93364542dd?w=1200&q=80", cta: "Activate" }
 ];
 
 export default function Home() {

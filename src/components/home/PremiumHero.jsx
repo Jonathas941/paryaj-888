@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Gift, Sparkles, Crown } from "lucide-react";
 import { Image } from "@/components/ui/image";
 
-const HERO_IMG = "https://images.unsplash.com/photo-1522778526097-ce079d5409ec?w=1200&q=85";
+const HERO_IMG = "https://images.unsplash.com/photo-1676746424139-77f8bd8922a8?w=1200&q=85";
 
 export default function PremiumHero() {
   return (

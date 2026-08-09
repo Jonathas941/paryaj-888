@@ -1,73 +1,77 @@
-# PARYAJ 888 Backend
+# Base44 Project
 
-Clean Railway-ready Express + TypeScript + PostgreSQL sportsbook API.
+Use this repository to run and edit the app locally, then publish changes back through Base44.
 
-## Requirements satisfied
+Any change pushed to the repo will also be reflected in the Base44 Builder.
 
-- Express server uses `process.env.PORT`
-- PostgreSQL through `DATABASE_URL`
-- `GET /health`
-- Production database migrations
-- Sportsbook endpoints under `/api/v1`
-- npm scripts: `build`, `start`, `migrate:prod`
+## Prerequisites
 
-## Main endpoints
+1. Clone the repository using the project's Git URL.
+2. Navigate to the project directory.
+3. Install dependencies: `npm install`.
+4. Install the Base44 CLI: `npm install -g base44@latest`.
 
-- `GET /health`
-- `GET /api/v1/health/db`
-- `GET /api/v1/sports`
-- `GET /api/v1/sports/:sportId/leagues`
-- `GET /api/v1/events`
-- `GET /api/v1/events?live=true`
-- `GET /api/v1/events/live`
-- `GET /api/v1/events/:eventId`
-- `GET /api/v1/events/:eventId/markets`
+See the [Base44 CLI docs](https://docs.base44.com/developers/references/cli/get-started/overview) if you want to run Base44 commands directly.
 
-## Local setup
+## Run Locally
+
+Run the full local development environment from the project root:
 
 ```bash
-cp .env.example .env
-npm install
-npm run build
-npm run migrate
-npm start
+base44 dev
 ```
 
-Open:
+`base44 dev` starts the local Base44 development backend and, when this app is configured for it, also starts the frontend dev server for you. Use the frontend URL printed by the command.
 
-```text
-http://localhost:3000/health
+For example, when the Base44 project config includes a `serveCommand`, `base44 dev` can launch the frontend too:
+
+```json5
+{
+  "site": {
+    "serveCommand": "npm run dev"
+  }
+}
 ```
 
-## Railway setup
+In a Base44 project this lives in `base44/config.jsonc`.
 
-1. Create a new GitHub repository.
-2. Upload the CONTENTS of this folder so `package.json` is at repository root.
-3. Create a Railway project from that GitHub repository.
-4. Add a Railway PostgreSQL service.
-5. In the API service Variables add/reference:
-   - `NODE_ENV=production`
-   - `DATABASE_URL=${{Postgres.DATABASE_URL}}`
-   - `FRONTEND_ORIGIN=<your Base44 origin>`
-6. Do not manually set `PORT`; Railway supplies it.
-7. Railway config in `railway.json` will:
-   - run `npm run build`
-   - run `npm run migrate:prod && npm start`
-   - health-check `/health`
+## Run Only The Frontend
 
-## Important
+If you only want to work on the frontend against the hosted Base44 backend, run:
 
-`/health` deliberately does not query PostgreSQL. This prevents a temporary DB problem
-from being confused with an HTTP-process health problem.
-
-Use `/api/v1/health/db` to check actual database connectivity.
-
-## Base44
-
-After Railway generates a public domain, use:
-
-```text
-PARYAJ_API_URL=https://YOUR-SERVICE.up.railway.app/api/v1
+```bash
+npm run dev
 ```
 
-Do not expose database credentials or provider secret keys to the Base44 frontend.
+Open the local URL printed by Vite.
+
+## Use The Hosted Backend
+
+For frontend-only development, create or update `.env.local` in the project root:
+
+```bash
+VITE_BASE44_APP_ID=your_app_id
+VITE_BASE44_APP_BASE_URL=https://your-app.base44.app
+```
+
+`VITE_BASE44_APP_ID` identifies the Base44 app.
+
+`VITE_BASE44_APP_BASE_URL` tells the Base44 Vite plugin where to send local `/api` requests. Point it at your deployed Base44 app URL when you want the local frontend to use the hosted backend.
+
+When you use `base44 dev`, the command injects the local Base44 values for you, so `.env.local` is mainly needed for frontend-only workflows.
+
+## Publish Your Changes
+
+After pushing your changes to git, open the Base44 dashboard and publish the app:
+
+```bash
+base44 dashboard open
+```
+
+## Docs & Support
+
+Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
+
+Base44 CLI command reference: [https://docs.base44.com/developers/references/cli/commands/introduction](https://docs.base44.com/developers/references/cli/commands/introduction)
+
+Support: [https://app.base44.com/support](https://app.base44.com/support)

@@ -6,43 +6,103 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
-// Add page imports here
+import { BetSlipProvider } from '@/lib/BetSlipContext';
+
+import AppLayout from '@/components/layout/AppLayout';
+import Home from '@/pages/Home';
+import Sports from '@/pages/Sports';
+import Live from '@/pages/Live';
+import EventDetail from '@/pages/EventDetail';
+import MyBets from '@/pages/MyBets';
+import Wallet from '@/pages/Wallet';
+import Deposit from '@/pages/Deposit';
+import Withdraw from '@/pages/Withdraw';
+import Transactions from '@/pages/Transactions';
+import Profile from '@/pages/Profile';
+import Promotions from '@/pages/Promotions';
+import Responsible from '@/pages/Responsible';
+import Casino from '@/pages/Casino';
+import ComingSoon from '@/components/common/ComingSoon';
+
+import AdminLayout from '@/pages/admin/AdminLayout';
+import AdminOverview from '@/pages/admin/AdminOverview';
+import AdminUsers from '@/pages/admin/AdminUsers';
+import AdminBets from '@/pages/admin/AdminBets';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
 
-  // Show loading spinner while checking app public settings or auth
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin"></div>
+      <div className="fixed inset-0 flex items-center justify-center bg-background">
+        <div className="w-8 h-8 border-4 border-surface-2 border-t-primary rounded-full animate-spin"></div>
       </div>
     );
   }
 
-  // Handle authentication errors
   if (authError) {
     if (authError.type === 'user_not_registered') {
       return <UserNotRegisteredError />;
     } else if (authError.type === 'auth_required') {
-      // Redirect to login automatically
       navigateToLogin();
       return null;
     }
   }
 
-  // Render the main app
   return (
-    <Routes>
-      {/* Add your page Route elements here */}
-      <Route path="*" element={<PageNotFound />} />
-    </Routes>
+    <BetSlipProvider>
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/live" element={<Live />} />
+          <Route path="/sports" element={<Sports />} />
+          <Route path="/event/:id" element={<EventDetail />} />
+          <Route path="/my-bets" element={<MyBets />} />
+          <Route path="/wallet" element={<Wallet />} />
+          <Route path="/deposit" element={<Deposit />} />
+          <Route path="/withdraw" element={<Withdraw />} />
+          <Route path="/transactions" element={<Transactions />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/promotions" element={<Promotions />} />
+          <Route path="/responsible" element={<Responsible />} />
+          <Route path="/casino" element={<Casino />} />
+          <Route path="/bonuses" element={<ComingSoon title="Bonuses" />} />
+          <Route path="/security" element={<ComingSoon title="Security" />} />
+          <Route path="/kyc" element={<ComingSoon title="Verification / KYC" />} />
+          <Route path="/limits" element={<ComingSoon title="Betting Limits" />} />
+          <Route path="/notifications" element={<ComingSoon title="Notifications" />} />
+          <Route path="/payment-methods" element={<ComingSoon title="Payment Methods" />} />
+          <Route path="/login-history" element={<ComingSoon title="Login History" />} />
+        </Route>
+
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminOverview />} />
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="bets" element={<AdminBets />} />
+          <Route path="sportsbook" element={<ComingSoon title="Sportsbook Management" />} />
+          <Route path="payments" element={<ComingSoon title="Payments" />} />
+          <Route path="withdrawals" element={<ComingSoon title="Withdrawals" />} />
+          <Route path="casino" element={<ComingSoon title="Casino Management" />} />
+          <Route path="promotions" element={<ComingSoon title="Promotions" />} />
+          <Route path="risk" element={<ComingSoon title="Risk Management" />} />
+          <Route path="reports" element={<ComingSoon title="Reports" />} />
+          <Route path="kyc" element={<ComingSoon title="KYC Review" />} />
+          <Route path="notifications" element={<ComingSoon title="Notifications" />} />
+          <Route path="content" element={<ComingSoon title="Content" />} />
+          <Route path="support" element={<ComingSoon title="Support" />} />
+          <Route path="audit" element={<ComingSoon title="Audit Logs" />} />
+          <Route path="settings" element={<ComingSoon title="Settings" />} />
+          <Route path="health" element={<ComingSoon title="System Health" />} />
+        </Route>
+
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </BetSlipProvider>
   );
 };
 
 
 function App() {
-
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClientInstance}>

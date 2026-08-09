@@ -1,0 +1,29 @@
+{
+  "name": "Favorite",
+  "type": "object",
+  "properties": {
+    "item_type": {
+      "type": "string",
+      "enum": [
+        "team",
+        "league",
+        "event",
+        "game"
+      ]
+    },
+    "item_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "meta": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "item_type",
+    "item_id",
+    "name"
+  ]
+}

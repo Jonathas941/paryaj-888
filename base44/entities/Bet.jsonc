@@ -1,0 +1,80 @@
+{
+  "name": "Bet",
+  "type": "object",
+  "properties": {
+    "bet_id": {
+      "type": "string",
+      "description": "Backend bet identifier"
+    },
+    "bet_type": {
+      "type": "string",
+      "enum": [
+        "single",
+        "multiple",
+        "system"
+      ]
+    },
+    "stake": {
+      "type": "number"
+    },
+    "total_odds": {
+      "type": "number"
+    },
+    "potential_payout": {
+      "type": "number"
+    },
+    "actual_payout": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "won",
+        "lost",
+        "void",
+        "cashed_out",
+        "rejected"
+      ]
+    },
+    "selections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string"
+          },
+          "event": {
+            "type": "string"
+          },
+          "market": {
+            "type": "string"
+          },
+          "pick": {
+            "type": "string"
+          },
+          "odds": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "settled_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "api",
+        "local"
+      ]
+    }
+  },
+  "required": [
+    "bet_type",
+    "stake",
+    "status"
+  ]
+}

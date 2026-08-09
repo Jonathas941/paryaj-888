@@ -49,13 +49,14 @@ export async function settleMarket(
     );
 
     // Candidate bets: unsettled, and touching this market.
+    // Note: Postgres rejects DISTINCT combined with FOR UPDATE, so the
+    // de-duplication happens in a subquery and the lock applies to bets only.
     const { rows: candidates } = await client.query(
-      `SELECT DISTINCT b.id
+      `SELECT b.id
          FROM bets b
-         JOIN bet_selections bs ON bs.bet_id = b.id
-        WHERE bs.market_id = $1
-          AND b.status = 'ACCEPTED'
-        FOR UPDATE OF b`,
+        WHERE b.status = 'ACCEPTED'
+          AND b.id IN (SELECT bs.bet_id FROM bet_selections bs WHERE bs.market_id = $1)
+        FOR UPDATE`,
       [marketId]
     );
 

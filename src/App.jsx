@@ -9,6 +9,7 @@ import ScrollToTop from './components/ScrollToTop';
 import { BetSlipProvider } from '@/lib/BetSlipContext';
 
 import AppLayout from '@/components/layout/AppLayout';
+import Logo from '@/components/brand/Logo';
 import Home from '@/pages/Home';
 import Sports from '@/pages/Sports';
 import Live from '@/pages/Live';
@@ -34,8 +35,9 @@ const AuthenticatedApp = () => {
 
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-background">
-        <div className="w-8 h-8 border-4 border-surface-2 border-t-primary rounded-full animate-spin"></div>
+      <div className="fixed inset-0 flex flex-col items-center justify-center gap-6 bg-background">
+        <Logo showTagline={false} size={92} className="animate-pulse" />
+        <div className="w-7 h-7 border-[3px] border-surface-2 border-t-gold rounded-full animate-spin"></div>
       </div>
     );
   }

@@ -18,7 +18,7 @@ module.exports = {
         },
         primary: {
           DEFAULT: 'hsl(var(--primary))',
-          foreground: '#042014'
+          foreground: '#ffffff'
         },
         bright: 'hsl(var(--bright))',
         gold: 'hsl(var(--gold))',

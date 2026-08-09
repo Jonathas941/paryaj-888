@@ -4,21 +4,21 @@
 
 @layer base {
   :root {
-    /* PARYAJ 888 Brand */
-    --background: 141 42% 5%;        /* Deep Black */
-    --surface: 131 30% 14%;         /* Dark Green */
-    --surface-2: 131 26% 10%;
+    /* PARYAJ 888 Brand — matched to official logo */
+    --background: 145 40% 5%;        /* Deep Black-Green */
+    --surface: 145 30% 10%;         /* Dark Forest Green */
+    --surface-2: 145 25% 8%;
     --foreground: 0 0% 100%;
     --muted-foreground: 145 6% 58%; /* Muted Gray */
-    --primary: 145 100% 39%;        /* Emerald Green */
-    --bright: 145 81% 49%;          /* Bright Green */
-    --gold: 40 89% 61%;             /* Metallic Gold */
-    --soft-gold: 44 100% 71%;       /* Soft Gold */
+    --primary: 145 65% 28%;         /* Logo Forest Green #0B5D2D */
+    --bright: 133 50% 42%;          /* Logo Highlight Green #3A8C4B */
+    --gold: 43 66% 47%;             /* Logo Metallic Gold #C59929 */
+    --soft-gold: 43 80% 60%;        /* Soft Metallic Gold */
     --danger: 0 84% 60%;
     --info: 210 90% 56%;
-    --border: 141 22% 18%;
-    --input: 141 22% 18%;
-    --ring: 145 100% 39%;
+    --border: 145 22% 16%;
+    --input: 145 22% 16%;
+    --ring: 145 65% 28%;
     --radius: 0.75rem;
     --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
     --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;

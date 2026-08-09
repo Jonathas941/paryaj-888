@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Bell, Search, User, Wallet, ChevronDown, Globe } from "lucide-react";
 import Logo from "@/components/brand/Logo";
-import { useBetSlip } from "@/lib/BetSlipContext";
 import { formatCurrency } from "@/lib/format";
 
 export default function Header({ wallet, user }) {
   const navigate = useNavigate();
-  const { setOpen } = useBetSlip();
   const [lang, setLang] = useState("EN");
   const balance = wallet?.available_balance ?? 0;
 

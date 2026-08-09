@@ -1,16 +1,23 @@
 import React from "react";
-import { Image } from "@/components/ui/image";
 
-const LOGO_URL = "https://media.base44.com/images/public/6a78f0bed598e159cf9bcaec/35e32e0af_ChatGPTImageAug9202605_21_46PM.png";
+// Transparent-background PNG served from /public/brand.
+// Regenerate with: python3 scripts/make_transparent_logo.py
+export const LOGO_SRC = "/brand/paryaj888-logo.png";
 
-export default function Logo({ className = "", showTagline = true }) {
+/**
+ * Brand lockup. `size` controls the emblem; the wordmark can be hidden with
+ * showTagline={false} for tight spaces (mobile bar, avatars, favicons).
+ */
+export default function Logo({ className = "", showTagline = true, size = 44 }) {
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>
-      <Image
-        src={LOGO_URL}
+      <img
+        src={LOGO_SRC}
         alt="PARYAJ 888"
-        className="h-11 w-11 shrink-0"
-        fittingType="fit"
+        width={size}
+        height={size}
+        style={{ width: size, height: size }}
+        className="shrink-0 object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)]"
       />
       {showTagline && (
         <div className="leading-none border-l border-border pl-2.5">

@@ -151,9 +151,15 @@ async function main() {
     parseFloat(w4.locked_balance) === 0 && parseFloat(w4.available_balance) === after2, w4);
 
   console.log("\n--- authorization ---");
+  // A genuinely separate non-admin account (the first user was promoted).
+  const plain = await j("/api/v1/auth/register", { method: "POST", body: {
+    email: `plain${Date.now()}@example.com`,
+    username: `p${Date.now()}`.slice(0, 20),
+    password: "correct-horse-battery" } });
   check("non-admin blocked from admin routes",
-    (await j("/api/v1/admin/overview", { token: reg.body.accessToken && token })).status === 403 ||
-    (await j("/api/v1/admin/overview")).status === 401);
+    (await j("/api/v1/admin/overview", { token: plain.body.accessToken })).status === 403);
+  check("anonymous blocked from admin routes", (await j("/api/v1/admin/overview")).status === 401);
+  check("anonymous blocked from wallet", (await j("/api/v1/wallet")).status === 401);
 
   console.log(`\n================  ${passed} passed, ${failed} failed  ================\n`);
   server.close();

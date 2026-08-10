@@ -4,7 +4,7 @@ import { ArrowDownToLine, ArrowUpFromLine, Receipt, Gift, CreditCard, TrendingUp
 import api from "@/lib/api";
 import { useApi } from "@/lib/useApi";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
-import { formatCurrency } from "@/lib/format";
+import { useCurrency } from "@/lib/useCurrency";
 
 const ACTIONS = [
   { to: "/deposit", icon: ArrowDownToLine, label: "Deposit", color: "from-primary to-bright" },
@@ -15,6 +15,7 @@ const ACTIONS = [
 
 export default function Wallet() {
   const { data: w, loading } = useApi(() => api.getWallet());
+  const { currency, format } = useCurrency();
 
   const stats = [
     { label: "Pending Withdrawal", value: w?.pending_withdrawal, icon: TrendingUp, tone: "gold" },
@@ -31,12 +32,12 @@ export default function Wallet() {
       <div className="relative overflow-hidden rounded-2xl border border-primary/30 bg-gradient-to-br from-surface to-surface-2 p-5 mb-4 glow-green">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2 text-muted-foreground text-sm"><WalletIcon className="w-4 h-4" /> Available Balance</div>
-          <span className="text-xs text-muted-foreground">{w?.currency || "USD"}</span>
+          <span className="text-xs text-muted-foreground">{currency}</span>
         </div>
         {loading ? <LoadingSkeleton className="h-10 w-40" /> : (
-          <div className="text-4xl font-extrabold tracking-tight tabular-nums">{formatCurrency(w?.available_balance, w?.currency)}</div>
+          <div className="text-4xl font-extrabold tracking-tight tabular-nums">{format(w?.available_balance)}</div>
         )}
-        <div className="mt-3 text-sm text-muted-foreground">Bonus balance: <span className="text-gold font-semibold">{formatCurrency(w?.bonus_balance, w?.currency)}</span></div>
+        <div className="mt-3 text-sm text-muted-foreground">Bonus balance: <span className="text-gold font-semibold">{format(w?.bonus_balance)}</span></div>
       </div>
 
       {/* Quick actions */}
@@ -54,7 +55,7 @@ export default function Wallet() {
         {stats.map(s => (
           <div key={s.label} className="glass rounded-xl p-4">
             <div className="flex items-center gap-2 text-muted-foreground text-xs mb-2"><s.icon className="w-4 h-4" /> {s.label}</div>
-            {loading ? <LoadingSkeleton className="h-6 w-24" /> : <div className="font-bold text-lg tabular-nums">{formatCurrency(s.value, w?.currency)}</div>}
+            {loading ? <LoadingSkeleton className="h-6 w-24" /> : <div className="font-bold text-lg tabular-nums">{format(s.value)}</div>}
           </div>
         ))}
       </div>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { X, Trash2, Loader2, CheckCircle2, XCircle, AlertTriangle, Ticket } from "lucide-react";
 import { useBetSlip } from "@/lib/BetSlipContext";
-import { formatOdds, formatCurrency } from "@/lib/format";
+import { formatOdds } from "@/lib/format";
+import { useCurrency } from "@/lib/useCurrency";
 import api from "@/lib/api";
 import EmptyState from "@/components/common/EmptyState";
 
@@ -10,6 +11,7 @@ export default function BetSlipPanel({ onClose, compact = false }) {
   const [state, setState] = useState("ready");
   const [result, setResult] = useState(null);
   const sample = api.isSampleMode();
+  const { symbol, format } = useCurrency();
 
   const place = async () => {
     if (!stake || !selections.length) return;
@@ -36,7 +38,7 @@ export default function BetSlipPanel({ onClose, compact = false }) {
   };
 
   const reset = () => { setState("ready"); setResult(null); };
-  const done = () => { clear(); reset(); };
+  const done = () => { clear(); reset(); onClose?.(); };
 
   return (
     <div className="flex flex-col h-full">
@@ -63,8 +65,8 @@ export default function BetSlipPanel({ onClose, compact = false }) {
           <h3 className="font-bold text-lg">Bet Accepted</h3>
           <p className="text-sm text-muted-foreground mt-1">Bet ID <span className="text-bright font-semibold">{result?.bet_id}</span></p>
           <div className="mt-4 w-full bg-surface-2/60 border border-border rounded-lg p-3 text-left text-sm">
-            <div className="flex justify-between"><span className="text-muted-foreground">Stake</span><span className="font-semibold tabular-nums">{formatCurrency(Number(stake))}</span></div>
-            <div className="flex justify-between mt-1"><span className="text-muted-foreground">Potential payout</span><span className="font-bold text-gradient-gold tabular-nums">{formatCurrency(result?.potential_payout)}</span></div>
+            <div className="flex justify-between"><span className="text-muted-foreground">Stake</span><span className="font-semibold tabular-nums">{format(Number(stake))}</span></div>
+            <div className="flex justify-between mt-1"><span className="text-muted-foreground">Potential payout</span><span className="font-bold text-gradient-gold tabular-nums">{format(result?.potential_payout)}</span></div>
           </div>
           <button onClick={done} className="w-full bg-surface-2 border border-border font-semibold py-3 rounded-lg mt-4">Done</button>
         </div>
@@ -103,13 +105,13 @@ export default function BetSlipPanel({ onClose, compact = false }) {
           <div>
             <label className="text-xs text-muted-foreground">Stake ({selections.length > 1 ? "per bet" : "stake"})</label>
             <div className="flex items-center gap-2 mt-1 bg-surface-2/60 border border-border rounded-lg px-3 py-2.5">
-              <span className="text-muted-foreground text-sm">$</span>
+              <span className="text-muted-foreground text-sm">{symbol}</span>
               <input type="number" min="0" step="1" value={stake} onChange={e => setStake(e.target.value)} placeholder="0.00" className="bg-transparent outline-none w-full font-semibold tabular-nums" />
             </div>
           </div>
           <div className="space-y-1 text-sm">
             <div className="flex justify-between text-muted-foreground"><span>Total odds</span><span className="text-bright font-bold tabular-nums">{formatOdds(totalOdds)}</span></div>
-            <div className="flex justify-between"><span className="text-muted-foreground">Potential winnings</span><span className="font-bold text-gradient-gold tabular-nums">{formatCurrency(potentialPayout)}</span></div>
+            <div className="flex justify-between"><span className="text-muted-foreground">Potential winnings</span><span className="font-bold text-gradient-gold tabular-nums">{format(potentialPayout)}</span></div>
           </div>
 
           {state === "accepted" && (

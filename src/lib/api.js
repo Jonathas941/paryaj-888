@@ -221,6 +221,7 @@ export const api = {
   getEvents: (params = {}) => call("/sports/events", { query: params }, () => sample.getEvents(params)).then(r => SAMPLE_MODE ? r : r.map(normalizeEvent)),
   getLiveEvents: () => call("/sports/events", { query: { live: true } }, () => sample.liveEvents).then(r => SAMPLE_MODE ? r : r.map(normalizeEvent)),
   getEvent: (id) => call(`/sports/events/${id}`, {}, () => sample.getEvent(id)).then(data => SAMPLE_MODE ? data : normalizeEventDetail(data)),
+  getEventMarkets: (id) => call(`/sports/events/${id}/markets`, {}, () => sample.getEventMarkets(id)),
 
   // Bets
   placeBet: (payload) => {

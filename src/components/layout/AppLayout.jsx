@@ -5,6 +5,7 @@ import api from "@/lib/api";
 import { useApi } from "@/lib/useApi";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import BetSlipFab from "@/components/betting/BetSlipFab";
 
 export default function AppLayout() {
   const { user } = useAuth();
@@ -19,6 +20,7 @@ export default function AppLayout() {
         <Outlet />
         {!isAdmin && <Footer />}
       </main>
+      {!isAdmin && <BetSlipFab />}
     </div>
   );
 }

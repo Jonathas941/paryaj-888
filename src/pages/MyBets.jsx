@@ -6,13 +6,15 @@ import { useApi } from "@/lib/useApi";
 import StatusBadge from "@/components/common/StatusBadge";
 import EmptyState from "@/components/common/EmptyState";
 import { SkeletonList } from "@/components/common/LoadingSkeleton";
-import { formatCurrency, formatOdds, statusColor } from "@/lib/format";
+import { formatOdds, statusColor } from "@/lib/format";
+import { useCurrency } from "@/lib/useCurrency";
 
 const TABS = ["open", "won", "lost", "cashed_out", "void", "all"];
 
 export default function MyBets() {
   const [tab, setTab] = useState("open");
   const { data: bets, loading } = useApi(() => api.getUserBets({ status: tab }), [tab]);
+  const { format } = useCurrency();
 
   return (
     <div className="px-4 py-4 max-w-3xl mx-auto">
@@ -49,9 +51,9 @@ export default function MyBets() {
                 ))}
               </div>
               <div className="grid grid-cols-3 gap-2 pt-3 border-t border-border text-center">
-                <div><div className="text-[10px] text-muted-foreground uppercase">Stake</div><div className="font-semibold text-sm">{formatCurrency(b.stake)}</div></div>
+                <div><div className="text-[10px] text-muted-foreground uppercase">Stake</div><div className="font-semibold text-sm">{format(b.stake)}</div></div>
                 <div><div className="text-[10px] text-muted-foreground uppercase">Total Odds</div><div className="font-semibold text-sm text-bright">{formatOdds(b.total_odds)}</div></div>
-                <div><div className="text-[10px] text-muted-foreground uppercase">{b.status === "won" ? "Payout" : "Potential"}</div><div className="font-semibold text-sm text-gradient-gold">{formatCurrency(b.actual_payout || b.potential_payout)}</div></div>
+                <div><div className="text-[10px] text-muted-foreground uppercase">{b.status === "won" ? "Payout" : "Potential"}</div><div className="font-semibold text-sm text-gradient-gold">{format(b.actual_payout || b.potential_payout)}</div></div>
               </div>
             </div>
           ))}

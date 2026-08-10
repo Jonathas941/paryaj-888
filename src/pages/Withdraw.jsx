@@ -4,7 +4,7 @@ import { ArrowUpFromLine, CheckCircle2 } from "lucide-react";
 import api from "@/lib/api";
 import { useApi } from "@/lib/useApi";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
-import { formatCurrency } from "@/lib/format";
+import { useCurrency } from "@/lib/useCurrency";
 
 export default function Withdraw() {
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ export default function Withdraw() {
   const [method, setMethod] = useState("");
   const [done, setDone] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const { symbol, format } = useCurrency();
 
   const submit = async () => {
     if (!amount || !method) return;
@@ -26,7 +27,7 @@ export default function Withdraw() {
   return (
     <div className="px-4 py-4 max-w-md mx-auto">
       <h1 className="text-lg font-bold mb-1">Withdraw</h1>
-      <p className="text-sm text-muted-foreground mb-4">Available: {loading ? "…" : <span className="text-bright font-semibold">{formatCurrency(w?.available_balance, w?.currency)}</span>}</p>
+      <p className="text-sm text-muted-foreground mb-4">Available: {loading ? "…" : <span className="text-bright font-semibold">{format(w?.available_balance)}</span>}</p>
 
       {done ? (
         <div className="glass rounded-xl p-6 text-center">
@@ -41,7 +42,7 @@ export default function Withdraw() {
           <div className="mb-4">
             <label className="text-xs text-muted-foreground">Withdrawal amount</label>
             <div className="flex items-center gap-2 mt-1 bg-surface-2/60 border border-border rounded-lg px-3 py-3">
-              <span className="text-muted-foreground">$</span>
+              <span className="text-muted-foreground">{symbol}</span>
               <input type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00" className="bg-transparent outline-none w-full font-semibold tabular-nums" />
             </div>
           </div>

@@ -4,6 +4,7 @@ import { ArrowDownToLine, CheckCircle2 } from "lucide-react";
 import api from "@/lib/api";
 import { useApi } from "@/lib/useApi";
 import { LoadingSkeleton } from "@/components/common/LoadingSkeleton";
+import { useCurrency } from "@/lib/useCurrency";
 
 export default function Deposit() {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ export default function Deposit() {
   const [amount, setAmount] = useState("");
   const [done, setDone] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const { symbol } = useCurrency();
 
   const m = methods?.find(x => x.id === selected);
   const submit = async () => {
@@ -57,11 +59,11 @@ export default function Deposit() {
           <div className="mb-4">
             <label className="text-xs text-muted-foreground">Amount</label>
             <div className="flex items-center gap-2 mt-1 bg-surface-2/60 border border-border rounded-lg px-3 py-3">
-              <span className="text-muted-foreground">$</span>
+              <span className="text-muted-foreground">{symbol}</span>
               <input type="number" min={m?.min || 0} value={amount} onChange={e => setAmount(e.target.value)} placeholder="0.00" className="bg-transparent outline-none w-full font-semibold tabular-nums" />
             </div>
             <div className="flex gap-2 mt-2">
-              {[20, 50, 100, 200].map(v => <button key={v} onClick={() => setAmount(String(v))} className="flex-1 py-1.5 rounded-md bg-surface-2/60 border border-border text-xs font-semibold hover:border-primary/40">${v}</button>)}
+              {[20, 50, 100, 200].map(v => <button key={v} onClick={() => setAmount(String(v))} className="flex-1 py-1.5 rounded-md bg-surface-2/60 border border-border text-xs font-semibold hover:border-primary/40">{symbol}{v}</button>)}
             </div>
           </div>
 

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Ticket } from "lucide-react";
 import api from "@/lib/api";
 import { useApi } from "@/lib/useApi";
+import { onRefresh } from "@/lib/refresh";
 import StatusBadge from "@/components/common/StatusBadge";
 import EmptyState from "@/components/common/EmptyState";
 import { SkeletonList } from "@/components/common/LoadingSkeleton";
@@ -13,8 +14,10 @@ const TABS = ["open", "won", "lost", "cashed_out", "void", "all"];
 
 export default function MyBets() {
   const [tab, setTab] = useState("open");
-  const { data: bets, loading } = useApi(() => api.getUserBets({ status: tab }), [tab]);
+  const { data: bets, loading, error, reload } = useApi(() => api.getUserBets({ status: tab }), [tab]);
   const { format } = useCurrency();
+
+  useEffect(() => onRefresh(({ bets: b }) => { if (b) reload(); }), [reload]);
 
   return (
     <div className="px-4 py-4 max-w-3xl mx-auto">
@@ -26,7 +29,9 @@ export default function MyBets() {
         ))}
       </div>
 
-      {loading ? <SkeletonList count={2} /> : (bets || []).length === 0 ? (
+      {loading ? <SkeletonList count={2} /> : error ? (
+        <div className="glass rounded-xl"><EmptyState icon={Ticket} title="Couldn't load bets" message="Please check your connection and try again." action={<button onClick={reload} className="text-bright text-sm font-semibold hover:underline">Retry</button>} /></div>
+      ) : (bets || []).length === 0 ? (
         <div className="glass rounded-xl"><EmptyState icon={Ticket} title="No bets here" message="Your bets in this category will appear here." action={<Link to="/sports" className="text-bright text-sm font-semibold hover:underline">Browse sports →</Link>} /></div>
       ) : (
         <div className="space-y-3">

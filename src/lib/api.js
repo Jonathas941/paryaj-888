@@ -224,6 +224,7 @@ export const api = {
   getEventMarkets: (id) => call(`/sports/events/${id}/markets`, {}, () => sample.getEventMarkets(id)),
 
   // Bets
+  // Bets — always hit the backend. Never simulate, never fake IDs.
   placeBet: (payload) => {
     const backendPayload = {
       stake: Number(payload.stake),
@@ -236,17 +237,18 @@ export const api = {
         displayOdds: s.displayOdds || s.odds
       }))
     };
-    return call("/bets/place", { method: "POST", body: backendPayload }, () => sample.samplePlaceBet(payload))
-      .then(data => SAMPLE_MODE ? data : {
-        accepted: true,
-        bet_id: data?.bet?.id || null,
-        status: "accepted",
-        reason: null,
-        stake: data?.bet?.stake ?? payload.stake,
-        potential_payout: data?.bet?.potentialPayout ?? 0
-      });
+    return call("/bets/place", { method: "POST", body: backendPayload }).then(data => ({
+      accepted: true,
+      bet_id: data?.bet?.id || null,
+      stake: data?.bet?.stake ?? Number(payload.stake),
+      totalOdds: data?.bet?.totalOdds ?? null,
+      potentialPayout: data?.bet?.potentialPayout ?? 0,
+      currency: data?.bet?.currency ?? null,
+      status: data?.bet?.status ?? "ACCEPTED",
+      duplicate: !!data?.duplicate
+    }));
   },
-  getUserBets: (params = {}) => call("/bets", { query: params }, () => sample.getUserBets(params)).then(r => SAMPLE_MODE ? r : r.map(normalizeBet)),
+  getUserBets: (params = {}) => call("/bets", { query: params }).then(r => r.map(normalizeBet)),
 
   // Wallet
   getWallet: () => call("/wallet", {}, () => sample.wallet).then(data => SAMPLE_MODE ? data : normalizeWallet(data)),

@@ -20,9 +20,9 @@ export default function EventDetail() {
   if (!event) return null;
 
   const ev = event;
-  const sel = (mid, s) => selections.find(x => x.eventId === ev.id && x.selectionId === `${ev.id}-${mid}-${s.id}`);
+  const sel = (s) => selections.find(x => x.eventId === ev.id && x.selectionId === s.id);
   const add = (mid, mname, s) => addSelection({
-    eventId: ev.id, selectionId: `${ev.id}-${mid}-${s.id}`,
+    eventId: ev.id, selectionId: s.id, marketId: s.marketId,
     event: `${ev.home} vs ${ev.away}`, market: mname, pick: s.label, odds: s.odds
   });
 
@@ -76,7 +76,7 @@ export default function EventDetail() {
               </div>
               <div className={`grid ${opts.length >= 3 ? "grid-cols-3" : "grid-cols-2"} gap-2`}>
                 {opts.map(o => (
-                  <OddsButton key={o.id} odds={o.odds} label={o.label} active={!!sel(mid, o)} onClick={() => add(mid, mname, o)} />
+                  <OddsButton key={o.id} odds={o.odds} label={o.label} active={!!sel(o)} onClick={() => add(mid, mname, o)} />
                 ))}
               </div>
             </div>

@@ -22,6 +22,10 @@ export function BetSlipProvider({ children }) {
     setSelections(prev => prev.filter(s => !(s.eventId === eventId && s.selectionId === selectionId)));
   }, []);
 
+  const updateSelectionOdds = useCallback((eventId, selectionId, odds) => {
+    setSelections(prev => prev.map(s => (s.eventId === eventId && s.selectionId === selectionId ? { ...s, odds } : s)));
+  }, []);
+
   const clear = useCallback(() => { setSelections([]); setStake(""); }, []);
 
   const totalOdds = selections.reduce((acc, s) => acc * Number(s.odds), 1);
@@ -29,7 +33,7 @@ export function BetSlipProvider({ children }) {
 
   return (
     <BetSlipContext.Provider value={{
-      selections, addSelection, removeSelection, clear,
+      selections, addSelection, removeSelection, updateSelectionOdds, clear,
       stake, setStake, betType, setBetType,
       totalOdds, potentialPayout, open, setOpen,
       count: selections.length

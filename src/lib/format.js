@@ -14,12 +14,14 @@ export function oddsToAmerican(value) {
   return `${Math.round(-100 / (n - 1))}`;
 }
 
-export function formatCurrency(value, currency = "USD") {
+export function formatCurrency(value, currency) {
+  const lang = (typeof localStorage !== "undefined" && localStorage.getItem("paryaj_lang")) || "en";
+  const cur = currency || (lang === "ht" ? "HTG" : "USD");
   const n = Number(value || 0);
   try {
-    return new Intl.NumberFormat("en-US", { style: "currency", currency, maximumFractionDigits: 2 }).format(n);
+    return new Intl.NumberFormat("en-US", { style: "currency", currency: cur, maximumFractionDigits: 2 }).format(n);
   } catch {
-    return `${currency} ${n.toFixed(2)}`;
+    return `${cur} ${n.toFixed(2)}`;
   }
 }
 

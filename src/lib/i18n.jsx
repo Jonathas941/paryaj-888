@@ -7,7 +7,7 @@ const DEFAULT_LANG = "en";
 const I18nContext = createContext(null);
 
 export function I18nProvider({ children }) {
-  const [lang, setLang] = useState(() => {
+  const [lang, setLangState] = useState(() => {
     try {
       return localStorage.getItem(STORAGE_KEY) || DEFAULT_LANG;
     } catch {
@@ -15,12 +15,18 @@ export function I18nProvider({ children }) {
     }
   });
 
-  useEffect(() => {
+  const setLang = useCallback((next) => {
+    const value = typeof next === "function" ? next(lang) : next;
+    setLangState(value);
     try {
-      localStorage.setItem(STORAGE_KEY, lang);
+      localStorage.setItem(STORAGE_KEY, value);
     } catch {
       /* ignore */
     }
+    document.documentElement.lang = value;
+  }, [lang]);
+
+  useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
 

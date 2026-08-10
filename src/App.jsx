@@ -24,6 +24,10 @@ import Promotions from '@/pages/Promotions';
 import Responsible from '@/pages/Responsible';
 import Casino from '@/pages/Casino';
 import ComingSoon from '@/components/common/ComingSoon';
+import Terms from '@/pages/Terms';
+import Privacy from '@/pages/Privacy';
+import AmlKyc from '@/pages/AmlKyc';
+import SportsRules from '@/pages/SportsRules';
 
 import AdminLayout from '@/pages/admin/AdminLayout';
 import AdminOverview from '@/pages/admin/AdminOverview';
@@ -68,6 +72,10 @@ const AuthenticatedApp = () => {
           <Route path="/promotions" element={<Promotions />} />
           <Route path="/responsible" element={<Responsible />} />
           <Route path="/casino" element={<Casino />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/kyc" element={<AmlKyc />} />
+          <Route path="/sports-rules" element={<SportsRules />} />
           <Route path="/bonuses" element={<ComingSoon title="Bonuses" />} />
           <Route path="/security" element={<ComingSoon title="Security" />} />
           <Route path="/kyc" element={<ComingSoon title="Verification / KYC" />} />

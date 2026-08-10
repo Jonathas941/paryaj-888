@@ -5,6 +5,7 @@ import {
   MonitorPlay, Coins, Zap, Swords, CircleDot, Target
 } from "lucide-react";
 import api from "@/lib/api";
+import { useI18n } from "@/lib/i18n";
 import { useApi } from "@/lib/useApi";
 import SectionHeader from "@/components/common/SectionHeader";
 import LiveEventCompact from "@/components/betting/LiveEventCompact";
@@ -17,20 +18,20 @@ import { SkeletonList } from "@/components/common/LoadingSkeleton";
 import EmptyState from "@/components/common/EmptyState";
 
 const SPORT_CATEGORIES = [
-  { title: "Football", subtitle: "1,284 Live Markets", image: "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=800&q=80", icon: Trophy, to: "/sports" },
-  { title: "Basketball", subtitle: "892 Live Markets", image: "https://images.unsplash.com/photo-1579487685737-e435a87b2518?w=800&q=80", icon: CircleDot, to: "/sports" },
-  { title: "Tennis", subtitle: "512 Live Markets", image: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80", icon: Target, to: "/sports" },
-  { title: "Boxing", subtitle: "312 Live Markets", image: "https://images.unsplash.com/photo-1546711076-85a7923432ab?w=800&q=80", icon: Swords, to: "/sports" },
-  { title: "MMA", subtitle: "286 Live Markets", image: "https://images.unsplash.com/photo-1681203888755-bd61fe3558eb?w=800&q=80", icon: Swords, to: "/sports" },
-  { title: "Esports", subtitle: "568 Live Markets", image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80", icon: Gamepad2, to: "/sports" }
+  { title: "cat.football", subtitle: "1,284 Live Markets", image: "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=800&q=80", icon: Trophy, to: "/sports" },
+  { title: "cat.basketball", subtitle: "892 Live Markets", image: "https://images.unsplash.com/photo-1579487685737-e435a87b2518?w=800&q=80", icon: CircleDot, to: "/sports" },
+  { title: "cat.tennis", subtitle: "512 Live Markets", image: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?w=800&q=80", icon: Target, to: "/sports" },
+  { title: "cat.boxing", subtitle: "312 Live Markets", image: "https://images.unsplash.com/photo-1546711076-85a7923432ab?w=800&q=80", icon: Swords, to: "/sports" },
+  { title: "cat.mma", subtitle: "286 Live Markets", image: "https://images.unsplash.com/photo-1681203888755-bd61fe3558eb?w=800&q=80", icon: Swords, to: "/sports" },
+  { title: "cat.esports", subtitle: "568 Live Markets", image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80", icon: Gamepad2, to: "/sports" }
 ];
 
 const CASINO_GAMES = [
-  { title: "Slots", subtitle: "500+ Games", image: "https://images.unsplash.com/photo-1518895312237-a9e23508077d?w=800&q=80", icon: Dices, accent: "gold" },
-  { title: "Live Casino", subtitle: "Real Dealers", image: "https://images.unsplash.com/photo-1511193311914-0346f16efe90?w=800&q=80", icon: MonitorPlay, accent: "green" },
-  { title: "Table Games", subtitle: "Blackjack, Roulette & More", image: "https://images.unsplash.com/photo-1626775238053-4315516eedc9?w=800&q=80", icon: Coins, accent: "gold" },
-  { title: "Jackpots", subtitle: "Biggest Wins", image: "https://images.unsplash.com/photo-1596838132731-3301c3fd4317?w=800&q=80", icon: Crown, accent: "gold", jackpot: "$1,234,567.89" },
-  { title: "Crash Games", subtitle: "Instant Wins", image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80", icon: Zap, accent: "green" }
+  { title: "cat.slots", subtitle: "500+ Games", image: "https://images.unsplash.com/photo-1518895312237-a9e23508077d?w=800&q=80", icon: Dices, accent: "gold" },
+  { title: "cat.liveCasino", subtitle: "Real Dealers", image: "https://images.unsplash.com/photo-1511193311914-0346f16efe90?w=800&q=80", icon: MonitorPlay, accent: "green" },
+  { title: "cat.tableGames", subtitle: "Blackjack, Roulette & More", image: "https://images.unsplash.com/photo-1626775238053-4315516eedc9?w=800&q=80", icon: Coins, accent: "gold" },
+  { title: "cat.jackpots", subtitle: "Biggest Wins", image: "https://images.unsplash.com/photo-1596838132731-3301c3fd4317?w=800&q=80", icon: Crown, accent: "gold", jackpot: "$1,234,567.89" },
+  { title: "cat.crashGames", subtitle: "Instant Wins", image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80", icon: Zap, accent: "green" }
 ];
 
 const PROMOS = [
@@ -43,6 +44,7 @@ const PROMOS = [
 const viewAll = "flex items-center gap-1 text-[11px] font-semibold text-bright hover:underline shrink-0";
 
 export default function Home() {
+  const { t } = useI18n();
   const { data: live, loading } = useApi(() => api.getLiveEvents());
   const promoRef = useRef(null);
 
@@ -68,27 +70,27 @@ export default function Home() {
       {/* Top Sports */}
       <section className="px-4 pt-6">
         <SectionHeader
-          title="Top Sports"
+          title={t("home.topSports")}
           icon={Trophy}
-          action={<Link to="/sports" className={viewAll}>View All Sports <ChevronRight className="w-3.5 h-3.5" /></Link>}
+          action={<Link to="/sports" className={viewAll}>{t("home.viewAllSports")} <ChevronRight className="w-3.5 h-3.5" /></Link>}
         />
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          {SPORT_CATEGORIES.map(c => <MediaTile key={c.title} {...c} />)}
+          {SPORT_CATEGORIES.map(c => <MediaTile key={c.title} {...c} title={t(c.title)} />)}
         </div>
       </section>
 
       {/* Live Betting Now */}
       <section className="px-4 pt-6">
         <SectionHeader
-          title="Live Betting Now"
+          title={t("home.liveNow")}
           icon={Radio}
-          action={<Link to="/live" className={viewAll}>View All Live <ChevronRight className="w-3.5 h-3.5" /></Link>}
+          action={<Link to="/live" className={viewAll}>{t("home.viewAllLive")} <ChevronRight className="w-3.5 h-3.5" /></Link>}
         />
         {loading ? (
           <SkeletonList count={5} />
         ) : liveList.length === 0 ? (
           <div className="glass rounded-xl">
-            <EmptyState icon={Radio} title="No live events" message="Check back soon for live action." />
+            <EmptyState icon={Radio} title={t("home.noLive")} message={t("home.noLiveMsg")} />
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
@@ -126,18 +128,18 @@ export default function Home() {
       {/* Top Casino Games */}
       <section className="px-4 pt-6 pb-10">
         <SectionHeader
-          title="Top Casino Games"
+          title={t("home.topCasino")}
           icon={Crown}
-          action={<Link to="/casino" className={viewAll}>View All Casino <ChevronRight className="w-3.5 h-3.5" /></Link>}
+          action={<Link to="/casino" className={viewAll}>{t("home.viewAllCasino")} <ChevronRight className="w-3.5 h-3.5" /></Link>}
         />
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-          {CASINO_GAMES.map(c => <CasinoGameCard key={c.title} {...c} />)}
+          {CASINO_GAMES.map(c => <CasinoGameCard key={c.title} {...c} title={t(c.title)} />)}
         </div>
       </section>
 
       {api.isSampleMode() && (
         <p className="text-center text-[10px] text-muted-foreground uppercase tracking-wide pb-6">
-          Sample content — connect backend for real data
+          {t("home.sampleNote")}
         </p>
       )}
     </div>

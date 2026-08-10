@@ -135,6 +135,7 @@ export const wallet = {
 export const paymentMethods = [
   { id: "visa", name: "Visa / Mastercard", category: "card", min: 10, max: 5000, fee: "Free", processing: "Instant" },
   { id: "bank", name: "Bank Transfer", category: "bank", min: 50, max: 20000, fee: "Free", processing: "1-3 days" },
+  { id: "moncash", name: "Moncash", category: "mobile", min: 100, max: 250000, fee: "Free", processing: "Instant" },
   { id: "momo", name: "Mobile Wallet", category: "mobile", min: 5, max: 1000, fee: "Free", processing: "Instant" },
   { id: "crypto", name: "Crypto", category: "crypto", min: 20, max: 50000, fee: "Network fee", processing: "10-30 min", admin_disabled: false }
 ];
